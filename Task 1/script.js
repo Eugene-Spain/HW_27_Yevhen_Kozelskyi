@@ -20,7 +20,20 @@ const weather = {
         const lowestTemp = Math.min(this.Monday, this.Tuesday, this.Wednesday, this.Thursday, this.Friday, this.Saturday, this.Sunday);
         return lowestTemp;
     },
-
+    [Symbol.toPrimitive](hint) {
+        if (hint === "string") {
+            const days = Object.keys(this).splice(0,7);
+            const shortDays = days.map((day) => {
+               return day.substring(0, 2)
+            });
+            const result = `(${shortDays.join('-')})`
+            return console.log(result);
+        }
+        if (hint === "number") {
+            return this.getAverageTemp();
+        }
+        return 'Choose string or number for result';
+    }
 };
 // В начале  просто сделал функцию под обьект но потом прочитал что именно обьект должен находить значения и переделал.
 // function getAverageTemp(weatherObject){
@@ -36,17 +49,10 @@ const weather = {
 // и так далее - является достаточно важными элементами в js , то хотелось бы с тобой пройти побольше практических задач, потому что вроде все понятно,
 // но как эти знания на практике использовать - на текущий момент просто трудно представить, а я еще даже не садился за библиотеку (таск 2)
 
-    // [Symbol.toPrimitive](hint) {
-    //     if (hint === "string") {
-    //         return this.title
-    //     }
-    //     if (hint === "number") {
-    //         return this.price
-    //     }
-    //     return "anything"
-    // }
-// }
+    
 
-console.log(weather.getAverageTemp())
-console.log(weather.getHighestTemp())
-console.log(weather.getLowestTemp())
+console.log(weather.getAverageTemp());
+console.log(weather.getHighestTemp());
+console.log(weather.getLowestTemp());
+String(weather);
+console.log(Number(weather));
